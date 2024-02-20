@@ -39,6 +39,11 @@ const New = () => {
                             Add Place
                         </button>
                     </div>
+                    <div className="form-group">
+                        <label for="founded">Founded Year</label>
+                        <input className="form-control" id="founded" name="founded" />
+                        </div>
+
                 </form>
             </main>
         </Def>

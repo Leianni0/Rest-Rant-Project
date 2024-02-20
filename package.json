@@ -18,7 +18,14 @@
     "express": "^4.18.2",
     "express-react-views": "^0.11.0",
     "method-override": "^3.0.0",
+    "mongoose": "^8.1.2",
     "react": "^16.14.0",
     "react-dom": "^16.14.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.0.1",
+    "@typescript-eslint/parser": "^7.0.1",
+    "eslint": "^8.56.0",
+    "eslint-plugin-react": "^7.33.2"
   }
 }
