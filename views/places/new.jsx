@@ -39,9 +39,15 @@ const New = () => {
                             Add Place
                         </button>
                     </div>
-                    <div className="form-group">
-                        <label for="founded">Founded Year</label>
-                        <input className="form-control" id="founded" name="founded" />
+                    <div className="mb-3">
+                        <label htmlFor='founded'>Year Founded</label>
+                            <input
+                                type='number'
+                                name='founded'
+                                id='founded'
+                                className='form-control'
+                                defaultValue={new Date().getFullYear()}
+                            />
                         </div>
 
                 </form>
