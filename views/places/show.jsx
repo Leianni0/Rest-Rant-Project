@@ -11,8 +11,28 @@ const Show = ({ place }) => {
             </span>
         );
     });
+//Comment section
+        let comments = <h5 className='inactive'>No comments yet. Be the first to comment!</h5>;
 
-    return (
+            if (place.comments.length > 0) {
+                comments = place.comments.map((comment) => {
+                    return (
+                        <div key={comment.id} className='card mb-3'>
+                            <div className='card-body'>
+                                <h5 className='card-title'>{comment.author}</h5>
+                                <h6 className='card-subtitle mb-2 text-muted'>
+                                    {comment.rant ? 'Rant 😡' : 'Rave 🤩'}
+                                </h6>
+                                <h6 className='card-subtitle mb-2 text-muted'>
+                                    Rating: {comment.stars} stars
+                                </h6>
+                                <p className='card-text'>{comment.content}</p>
+                            </div>
+                        </div>
+                    );
+                });
+            }
+            return (
         <Def>
             <main className='container'>
                 <div className='row align-items-start'>
