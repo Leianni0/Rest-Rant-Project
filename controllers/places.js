@@ -37,16 +37,39 @@ router.get('/:id', (req, res) => {
 })
 
 router.put('/:id', (req, res) => {
-  res.send(render('PUT /places/:id stub'));
+  db.Place.findByIdAndUpdate(req.params.id, req.body)
+  .then(() => {
+      res.redirect(`/places/${req.params.id}`)
+  })
+  .catch(err => {
+      console.log('err', err)
+      res.send(render('error404'))
+  })
 })
 
+//Place Delete
 router.delete('/:id', (req, res) => {
-  res.send(render('DELETE /places/:id stub'));
+  db.Place.findByIdAndDelete(req.params.id)
+  .then(place => {
+      res.redirect('/places')
+  })
+  .catch(err => {
+      console.log('err', err)
+      res.send(render('error404'))
+  })
 })
 
+//Edit router
 router.get('/:id/edit', (req, res) => {
-  res.send(render('GET edit form stub'));
+  db.Place.findById(req.params.id)
+  .then(place => {
+      res.send(render('places/edit', { place }))
+  })
+  .catch(err => {
+      res.send(render('error404'));
+  })
 })
+
 
 router.post('/:id/rant', (req, res) => {
   res.send(render('GET /places/:id/rant stub'));
@@ -57,26 +80,28 @@ router.delete('/:id/rant/:rantId', (req, res) => {
 })
 
 //Comments
-router.post('/:id/comment', (req, res) => {
-  console.log(req.body)
-  db.Place.findById(req.params.id)
-  .then(place => {
-      db.Comment.create(req.body)
-      .then(comment => {
-          place.comments.push(comment.id)
-          place.save()
-          .then(() => {
-              res.redirect(`/places/${req.params.id}`)
-          })
+router.post('/:id/comments', (req, res) => {
+  let commentData = req.body;
+  commentData.rant = commentData.rant === 'on';
+  commentData.stars = parseFloat(commentData.stars);
+  db.Comment.create(commentData)
+      .then((comment) => {
+          db.Place.findById(req.params.id)
+              .then((place) => {
+                  place.comments.push(comment);
+                  place.save();
+                  res.redirect(`/places/${place._id}`);
+              })
+              .catch((err) => {
+                  console.log(err);
+                  res.status(404).send('Not Found');
+              });
       })
-      .catch(err => {
-          res.render('error404')
-      })
-  })
-  .catch(err => {
-      res.render('error404')
-  })
-})
+      .catch((err) => {
+          console.log(err);
+          res.status(400).send('Bad Request');
+      });
+});
 
-module.exports = router
+module.exports = router;
 

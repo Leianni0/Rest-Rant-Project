@@ -12,10 +12,32 @@ const Show = ({ place }) => {
         );
     });
 //Comment section
-        let comments = <h5 className='inactive'>No comments yet. Be the first to comment!</h5>;
-
+        let comments = <h5 className='inactive'>No comments yet!</h5>;
+        let rating = <h5 className='inactive'>Not yet rated</h5>;
             if (place.comments.length > 0) {
                 comments = place.comments.map((comment) => {
+                    let rating = (
+                        <h3 className="inactive">
+                          Not yet rated
+                        </h3>
+                      )
+                      if (data.place.comments.length) {
+                        let sumRatings = data.place.comments.reduce((tot, c) => {
+                          return tot + comment.stars
+                        }, 0)
+                        let averageRating = Math.round(sumRatings / data.place.comments.length)
+                        let stars = ''
+                        for (let i = 0; i < averageRating; i++) {
+                          stars += 'â­ï¸'
+                        }
+                        rating = (
+                          <h3>
+                            {stars} stars
+                          </h3>
+                        )
+                      }
+                      
+                      
                     return (
                         <div key={comment.id} className='card mb-3'>
                             <div className='card-body'>
@@ -23,9 +45,13 @@ const Show = ({ place }) => {
                                 <h6 className='card-subtitle mb-2 text-muted'>
                                     {comment.rant ? 'Rant 😡' : 'Rave 🤩'}
                                 </h6>
+                                <h5>
+                                    <strong>{comment.author}</strong>
+                                </h5>
                                 <h6 className='card-subtitle mb-2 text-muted'>
                                     Rating: {comment.stars} stars
                                 </h6>
+                                {rating}
                                 <p className='card-text'>{comment.content}</p>
                             </div>
                         </div>

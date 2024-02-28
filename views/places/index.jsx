@@ -6,7 +6,6 @@ const Index = (data) => {
     return (
       <div key={place.name} className='col-sm-6'>
         <h2>
-          {/* work here */}
           <a href={`/places/${place.id}`} >{place.name}</a>
           </h2>
         <p>{place.cuisines}</p>

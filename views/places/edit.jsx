@@ -1,33 +1,60 @@
-const React = require('react')
-const Def = require('../default.jsx')
+const React = require('react');
+const Default = require('../layouts/default');
 
-function edit_form (data) {
+const Edit = ({ place }) => {
     return (
-        <Def>
-          <h1>Add a New Place</h1>
-                <form action='/places' method='POST'>
+        <Default>
+            <main>
+                <h1>Edit Place</h1>
+                <form action={`/places/${place.id}?_method=PUT`} method='POST'>
                     <div className='mb-3'>
                         <label htmlFor='name'>Place Name</label>
-                        <input 
-                        type='text' 
-                        name='name' 
-                        id='name' 
-                        value={data.place.name} 
-                        className='form-control'
-                        required />
+                        <input
+                            type='text'
+                            name='name'
+                            id='name'
+                            className='form-control'
+                            defaultValue={place.name}
+                        />
                     </div>
-
+                    <div className="mb-3">
+                        <label htmlFor="founded">Founded</label>
+                        <input
+                            className="form-control"
+                            id="founded"
+                            name="founded"
+                            value={data.place.founded}
+                            />
+                    </div>
                     <div className='mb-3'>
                         <label htmlFor='pic'>Place Picture</label>
-                        <input type='url' name='pic' id='pic' className='form-control' />
+                        <input
+                            type='text'
+                            name='pic'
+                            id='pic'
+                            className='form-control'
+                            defaultValue={place.pic}
+                        />
                     </div>
                     <div className='mb-3'>
                         <label htmlFor='city'>City</label>
-                        <input type='text' name='city' id='city' className='form-control' />
+                        <input
+                            type='text'
+                            name='city'
+                            id='city'
+                            className='form-control'
+                            defaultValue={place.city}
+                        />
                     </div>
                     <div className='mb-3'>
                         <label htmlFor='state'>State</label>
-                        <input type='text' name='state' id='state' className='form-control' />
+                        <input
+                            type='text'
+                            name='state'
+                            id='state'
+                            className='form-control'
+                            defaultValue={place.state}
+                        />
                     </div>
                     <div className='mb-3'>
                         <label htmlFor='cuisines'>Cuisines</label>
@@ -36,17 +63,19 @@ function edit_form (data) {
                             name='cuisines'
                             id='cuisines'
                             className='form-control'
+                            defaultValue={place.cuisines}
                             required
                         />
                     </div>
                     <div className='mb-3'>
                         <button type='submit' className='btn btn-primary'>
-                            Add Place
+                            <i className='bi bi-floppy'></i> Save Changes
                         </button>
                     </div>
                 </form>
-        </Def>
-    )
-}
+            </main>
+        </Default>
+    );
+};
 
-module.exports = edit_form
+module.exports = Edit;
